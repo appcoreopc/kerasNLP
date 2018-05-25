@@ -49,6 +49,8 @@ docstwo = [ 'stupid','moron', 'idiot', 'dumb']
 tencoded_docs = [one_hot(d, vocab_size) for d in docstwo]
 
 tdocs = pad_sequences(tencoded_docs, maxlen=max_length, padding='post')
+
+# prediction -> the lower the better 
 model.predict(tdocs, 8,1)
 
 
