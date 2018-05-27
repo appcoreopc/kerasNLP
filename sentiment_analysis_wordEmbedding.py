@@ -6,6 +6,7 @@ from keras.layers import Dense
 from keras.layers import Flatten
 from keras.layers.embeddings import Embedding
 # define documents
+
 docs = ['Well done!',
 		'Good work',
 		'Great effort',
@@ -16,6 +17,7 @@ docs = ['Well done!',
 		'not good',
 		'poor work',
 		'Could have done better.']
+
 # define class labels
 labels = array([1,1,1,1,1,0,0,0,0,0])
 # integer encode the documents
@@ -41,17 +43,18 @@ model.fit(padded_docs, labels, epochs=50, verbose=0)
 loss, accuracy = model.evaluate(padded_docs, labels, verbose=0)
 print('Accuracy: %f' % (accuracy*100))
 
-
-# sample data for predictions 
-docstwo = [ 'stupid','moron', 'idiot', 'dumb']
+# sample data for predictions - uncomment to see prediction results
+#docstwo = [ 'stupid','moron', 'idiot', 'dumb']
+docstwo = ['Dear Tom, Good work','Good work', 'Excellent!', 'dumb']
 #docstwo = [ 'not good','not good', 'Could have done better', 'Poor effort!']
-
 tencoded_docs = [one_hot(d, vocab_size) for d in docstwo]
 
 tdocs = pad_sequences(tencoded_docs, maxlen=max_length, padding='post')
 
 # prediction -> the lower the better 
-model.predict(tdocs, 8,1)
+s = model.predict(tdocs, 8,1)
+
+print(s)
 
 
 
