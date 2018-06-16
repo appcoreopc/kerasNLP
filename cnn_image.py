@@ -41,6 +41,9 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras import backend as K
+from keras.preprocessing.image import img_to_array, load_img
+
+import numpy as np 
 
 
 # dimensions of our images.
@@ -50,7 +53,7 @@ train_data_dir = 'data/train'
 validation_data_dir = 'data/validation'
 nb_train_samples = 2000
 nb_validation_samples = 800
-epochs = 50
+epochs = 3  
 batch_size = 16
 
 if K.image_data_format() == 'channels_first':
@@ -112,4 +115,25 @@ model.fit_generator(
     validation_data=validation_generator,
     validation_steps=nb_validation_samples // batch_size)
 
+
+img = load_img('dog.jpg',False,target_size=(img_width,img_height))
+x = img_to_array(img)
+x = np.expand_dims(x, axis=0)
+preds = model.predict_classes(x)
+probs = model.predict_proba(x)
+print("---------------dog---------")
+print(preds, probs)
+print("------------------------")
+
+imgcat = load_img('cat.jpg',False,target_size=(img_width,img_height))
+y = img_to_array(imgcat)
+y = np.expand_dims(y, axis=0)
+predscat = model.predict_classes(y)
+probscat = model.predict_proba(y)
+print("------------cat ------------")
+print(predscat, probscat)
+print("------------------------")
+
 model.save_weights('first_try.h5')
+
+
